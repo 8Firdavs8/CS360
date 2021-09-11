@@ -26,19 +26,19 @@ def classify(people: dict) -> List[str]:
     for aKey, aValue in myDict.items():
         if len(aValue) > len(res):
             res = aValue
-    almostFinal = {}
+    closeFinal = {}
     
     for aKey, aValue in myDict.items():
         if len(aValue) != len(res):
             a = len(res) - len(aValue)
             b = a * '4'
             c = str(aValue) + str(b)
-            almostFinal[aKey] = c
+            closeFinal[aKey] = c
         else:
-            almostFinal[aKey] = aValue
+            closeFinal[aKey] = aValue
     # print(almostFinal)
     flipped = {}
-    for key, value in almostFinal.items():
+    for key, value in closeFinal.items():
         if value not in flipped:
             flipped[value] = [key]
         else:
@@ -50,11 +50,11 @@ def classify(people: dict) -> List[str]:
        
     dictionary_items = flipped.items()
     sorted_items = sorted(dictionary_items)
-    final = []
+    finaList = []
     for key, value in sorted_items:
-        final.append(value)
-    final = final[::-1]
-    flattened = [val for sublist in final for val in sublist]
+        finaList.append(value)
+    finaList = finaList[::-1]
+    flattened = [val for sublist in finaList for val in sublist]
     return flattened
 def read_file(filename: str) -> Dict[str, str]:
 
