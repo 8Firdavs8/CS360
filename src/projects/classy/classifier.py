@@ -1,6 +1,8 @@
 # #!/usr/bin/env python3
 # """
 # A Classy Problem
+# Firdavs Atabaev
+# CS360: Project1
 # """
 
 from typing import Dict, List
