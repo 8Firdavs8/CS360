@@ -14,7 +14,7 @@ def hash_mid_sqr(key: int, size: int) -> int:
         [len(str(key * key)) // 2-1:len(str(key * key)) // 2+1]) % size
 
 
-def hash_folding(key: int, size: int) -> int:
+def hash_folding(key: str, size: int) -> int:
     """Find hash using folding method"""
     # if (len(key))%2 == 0:
     #     firstHalf = key[:len(key) // 2]
