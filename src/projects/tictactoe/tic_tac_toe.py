@@ -59,6 +59,7 @@ class Board:
         return self.items[index]
 
     def __eq__(self, other):
+
         """
         Compares two boards
 
@@ -66,7 +67,14 @@ class Board:
         :returns: `True` if two boards represent the same state, `False` otherwise
         """
         # TODO: Implement this function
-        ...
+
+        for i in self:
+            for j in other:
+                for board1 in i:
+                    for board2 in j:
+                        if type(board1) != type(board2):
+                            return False
+        return True
 
     def __hash__(self) -> int:
         """
@@ -107,7 +115,44 @@ class Board:
         Otherwise, return 0.
         """
         # TODO: Implement this function
-        ...
+        if isinstance(self.items[0][0], X) and isinstance(self.items[0][1], X) and isinstance(self.items[0][2], X):
+            return 1
+        elif isinstance(self.items[0][0], X) and isinstance(self.items[1][0], X) and isinstance(self.items[2][0], X):
+            return 1
+        elif isinstance(self.items[0][0], X) and isinstance(self.items[1][1], X) and isinstance(self.items[2][2], X):
+            return 1
+        elif isinstance(self.items[1][0], X) and isinstance(self.items[1][1], X) and isinstance(self.items[1][2], X):
+            return 1
+        elif isinstance(self.items[2][0], X) and isinstance(self.items[2][1], X) and isinstance(self.items[2][2], X):
+            return 1
+        elif isinstance(self.items[2][0], X) and isinstance(self.items[1][1], X) and isinstance(self.items[0][2], X):
+            return 1
+        elif isinstance(self.items[2][1], X) and isinstance(self.items[1][1], X) and isinstance(self.items[0][2], X):
+            return 1
+        elif isinstance(self.items[2][1], X) and isinstance(self.items[1][1], X) and isinstance(self.items[0][1], X):
+            return 1
+        elif isinstance(self.items[2][2], X) and isinstance(self.items[1][2], X) and isinstance(self.items[0][2], X):
+            return 1
+        elif isinstance(self.items[0][0], O) and isinstance(self.items[0][1], O) and isinstance(self.items[0][2], O):
+            return -1
+        elif isinstance(self.items[0][0], O) and isinstance(self.items[1][0], O) and isinstance(self.items[2][0], O):
+            return -1
+        elif isinstance(self.items[0][0], O) and isinstance(self.items[1][1], O) and isinstance(self.items[2][2], O):
+            return -1
+        elif isinstance(self.items[1][0], O) and isinstance(self.items[1][1], O) and isinstance(self.items[1][2], O):
+            return -1
+        elif isinstance(self.items[2][0], O) and isinstance(self.items[2][1], O) and isinstance(self.items[2][2], O):
+            return -1
+        elif isinstance(self.items[0][0], O) and isinstance(self.items[1][1], O) and isinstance(self.items[0][2], O):
+            return -1
+        elif isinstance(self.items[2][1], O) and isinstance(self.items[1][1], O) and isinstance(self.items[0][2], O):
+            return -1
+        elif isinstance(self.items[2][1], O) and isinstance(self.items[1][1], O) and isinstance(self.items[0][1], O):
+            return -1
+        elif isinstance(self.items[2][2], O) and isinstance(self.items[1][2], O) and isinstance(self.items[0][2], O):
+            return -1
+        else:
+            return 0
 
     def full(self) -> bool:
         """
@@ -117,7 +162,12 @@ class Board:
         Otherwise, it should return `False`.
         """
         # TODO: Implement this function
-        ...
+        for i in range(3):
+            for x in range(3):
+                if isinstance(self.items[i][x], X) or isinstance(self.items[i][x], O):
+                    return True
+                elif isinstance(self.items[i][x], Dummy):
+                    return False
 
     def drawXOs(self):
         """
@@ -138,7 +188,10 @@ class Board:
         :returns: a list of tuples where each tuple is a (row, column) pair
         """
         # TODO: Implement this function
-        ...
+        if self.full():
+            return []
+        allAvailable = [(i, j) for i in range(3) for j in range(3)]
+        return allAvailable
 
     def clone(self):
         """
@@ -232,7 +285,24 @@ def minimax(player, board, depth=6):
     the board is full.
     """
     # TODO: Implement this function
-    ...
+    if board.eval() or depth == 0:
+        return board.eval()
+    if board.full:
+        return 0
+    if player == 1:
+        move = -1
+        board_copy = board.clone()
+        for i, j in board.available():
+            board_copy[i][j] = X(board.screen)
+            move = max(move, minimax(-1, board_copy, depth-1))
+        return move
+    if player == -1:
+        move = 1
+        board_copy = board.clone()
+        for i, j in board.available():
+            board_copy[i][j] = O(board.screen)
+            move = min(move, minimax(1, board_copy, depth-1))
+        return move 
 
 
 class TicTacToe(tkinter.Frame):
@@ -333,8 +403,19 @@ class TicTacToe(tkinter.Frame):
             # if the best move is in the first row and third column
             # then maxMove would be (0,2).
             # TODO: Implement the game logic
-            ...
+            for i in AILVLS:
+                depth = i
+            greaterMove = - 1
+            # iterate through a dictionary
+            board_copy = board.clone()
+            for i, j in board.available():
+                board_copy[i][j] = X(board.screen)
+                maxMove = minimax(-1, board_copy, depth)
+                if maxMove>greaterMove: 
+                    row, col = i, j
+                    maxMove = greaterMove
 
+            maxMove = (row, col)
             row, col = maxMove
             board[row][col] = X(canvas)
             self.locked = False
