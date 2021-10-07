@@ -44,7 +44,19 @@ def build_tree(all_freq: dict) -> Node:
     """
     heap: List[Node] = []
     # TODO: Implement this function
-    raise NotImplementedError
+    for key in all_freq:
+        node = Node(key, all_freq[key])
+        heapq.heappush(heap, node)
+
+    while (len(heap)>1):
+        node1 = heapq.heappop(heap)
+        node2 = heapq.heappop(heap)
+        merged = Node(None, node1.weight + node2.weight)
+        merged.left = node1
+        merged.right = node2
+        heapq.heappush(heap, merged)
+    return(merged)
+
 
 
 def traverse_tree(root: Node) -> str:
@@ -55,7 +67,30 @@ def traverse_tree(root: Node) -> str:
     :return values of a tree
     """
     # TODO: Implement this function
-    raise NotImplementedError
+    # if root is None:
+    #     return 
+    # print(root.value, end = ' ')
+    # #traverse the left subtree
+    # x = traverse_tree(root.left)
+    # y = traverse_tree(root.right)
+    # return x + y
+    left = []  
+    right = []  
+    left.append(root)  
+    while len(left) > 0:  
+        node = left.pop()  
+        if node.left is None and node.right is None:  
+            right.append(node)  
+        else:
+            if node.left is not None: 
+                left.append(node.left)  
+            if node.right is not None:  
+                left.append(node.right)  
+    res = ''
+    for i in range(0, len(right)):
+        res += right.pop().value
+    return ' '.join(res) 
+    
 
 
 def follow_tree(tree: Node, code: str) -> Union[str, None]:
@@ -67,7 +102,15 @@ def follow_tree(tree: Node, code: str) -> Union[str, None]:
     :return node value or None
     """
     # TODO: Implement this function
-    raise NotImplementedError
+    nodeVal = None
+    for ch in code:
+        if ch == '0':
+            tree = tree.left
+        if ch == '1':
+            tree = tree.right
+        if tree.left == None and tree.right == None:
+            nodeVal = tree.value
+    return nodeVal
 
 
 def mark_tree(d1: dict, d2: dict, root: Node, path: str) -> Union[None, tuple]:
