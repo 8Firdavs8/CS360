@@ -124,8 +124,20 @@ def mark_tree(d1: dict, d2: dict, root: Node, path: str) -> Union[None, tuple]:
     :return (d1, d2) tuple
     """
     # TODO: Implement this function
-    raise NotImplementedError
+    if root.left is None and root.right is None:
+        d1[root.value] = path
+        d2[path] = root.value
+        return
 
+    if root.left is not None:
+        if root.left not in d1.keys():
+            mark_tree(d1, d2, root.left, path + '0')
+
+    if root.right is not None:
+        if root.right not in d1.keys():
+            mark_tree(d1, d2, root.right, path + '1')
+
+    return (d1, d2)
 
 def print_codes(d: dict, weights: dict) -> None:
     """
@@ -147,7 +159,41 @@ def load_codes(codes: dict) -> Node:
     :return root of the Huffman tree
     """
     # TODO: Implement this function
-    raise NotImplementedError
+    root = Node(None, None)
+    cur = root
+    for i in codes:
+        val = codes[i]
+        for j in range(len(i)):
+            if j == len(i) - 1:    
+                if i[j] == '0' and cur.left == None:
+                    node = Node(None, None)
+                    node.value = val
+                    cur.left = node
+                if i[j] == '1' and cur.right == None:
+                    node = Node(None, None)
+                    node.value = val
+                    cur.right = node
+                if i[j] == '0' and cur.left != None:
+                    node = cur.left
+                    node.value = val
+                if i[j] == '1' and cur.right != None:
+                    node = cur.right
+                    node.value = val
+            else:
+                if i[j] == '0' and cur.left == None:
+                    node = Node(None, None)
+                    cur.left = node
+                    cur = cur.left
+                if i[j] == '1' and cur.right == None:
+                    node = Node(None, None)
+                    cur.right = node
+                    cur = cur.right
+                if i[j] == '0' and cur.left != None:
+                    cur = cur.left
+                if i[j] == '1' and cur.right != None:
+                    cur = cur.right
+        cur = root
+    return root
 
 
 def compress(text: str, codes: dict) -> Tuple[bytes, int]:
@@ -159,7 +205,21 @@ def compress(text: str, codes: dict) -> Tuple[bytes, int]:
     :return (packed text, padding length) tuple
     """
     # TODO: Implement this function
-    raise NotImplementedError
+    textList = list()
+    padding = str()
+    textList = [codes[letter]for letter in text]
+    textList = "".join(textList)
+    while len(textList) % 8 > 0:
+        padding += "0"
+        textList += "0"
+    Bytes = bytearray()
+    i = 0
+    while i < len(textList):
+        byte = textList[i:i+8]
+        Bytes.append(int(byte, 2))
+        i += 8
+    return (bytes(Bytes), len(padding))
+
 
 
 def decompress(bytestream: bytes, padding: int, tree: Node) -> str:
@@ -172,7 +232,7 @@ def decompress(bytestream: bytes, padding: int, tree: Node) -> str:
     :return decompressed (decoded) text
     """
     # TODO: Implement this function
-    raise NotImplementedError
+   
 
 
 def main():
