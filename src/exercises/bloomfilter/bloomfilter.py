@@ -7,29 +7,35 @@
 """
 
 
-from zlib import crc32
+from zlib import adler32, crc32
 
 
 class BloomFilter:
     def __init__(self, size: int = 11, k: int = 3) -> None:
         """Initialize the filter"""
-        # TODO: Implement this method
-        ...
+        self._k = k
+        self._filter = [False] * size 
+    
 
     def hash(self, word: str) -> tuple[int, ...]:
         """Return a tuple of k indices"""
-        # TODO: Implement this method
-        ...
+        return tuple((crc32(bytes(f"{word*i}", "utf8")) % len(self._filter) for i in range(self._k +1)))
+         
 
     def add(self, word: str) -> None:
+
         """Add a dictionary word to the filter"""
-        # TODO: Implement this method
-        ...
+        for h in self.hash(word):
+            self._filter[h] = True
+    
+
+    
 
     def __contains__(self, word: str) -> bool:
         """Check if a word in in the filter"""
-        # TODO: Implement this method
-        ...
+        return all([self._filter[i] for i in self.hash(word)])
+
+
 
     def __str__(self) -> str:
         """Return string representation of the filter"""
