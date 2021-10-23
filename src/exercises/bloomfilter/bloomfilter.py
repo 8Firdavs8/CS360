@@ -19,7 +19,7 @@ class BloomFilter:
 
     def hash(self, word: str) -> tuple[int, ...]:
         """Return a tuple of k indices"""
-        return tuple((crc32(bytes(f"{word*i}", "utf8")) % len(self._filter) for i in range(self._k +1)))
+        return tuple((crc32(bytes(f"{word*i}", "utf8")) % len(self._filter) for i in range(self._k + 1)))
          
 
     def add(self, word: str) -> None:
