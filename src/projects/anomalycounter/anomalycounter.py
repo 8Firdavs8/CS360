@@ -26,18 +26,18 @@ def count(filename: str) -> int:
         for j in range(len(myList[0])):
             if myList[i][j] == "*":
                 counter += 1
-                helper(myList,i, j)
+                externalHelper(myList,i, j)
     return counter
 
 
-def helper(myList,i, j):
+def externalHelper(myList,i, j):
   # Base case
   if 0<=i<len(myList) and 0<=j<len(myList[0]) and myList[i][j] == "*":
     myList[i][j] = 7
-    helper(myList, i, j+1) # Right
-    helper(myList, i, j-1) # Left
-    helper(myList, i+1, j) # Up
-    helper(myList, i-1, j) # Down 
+    externalHelper(myList, i, j+1) # Right
+    externalHelper(myList, i, j-1) # Left
+    externalHelper(myList, i+1, j) # Up
+    externalHelper(myList, i-1, j) # Down 
 
 
 
