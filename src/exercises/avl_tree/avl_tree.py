@@ -67,7 +67,7 @@ class AVLTree(BinarySearchTree):
         if node.balance > 1 or node.balance < -1:
             self.rebalance(node)
             return
-        if node.parent is not None:           # make sure node.parent is not None
+        if node.parent is not None:          
             if node.is_child_left():
                 node.parent.balance += 1
             elif node.is_child_right():
