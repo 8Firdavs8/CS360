@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Implementation of the Partition data structure"""
+# Firdavs Atabaev
 
 from xml.dom import minidom
 from collections import namedtuple
