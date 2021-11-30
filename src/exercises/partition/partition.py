@@ -25,7 +25,10 @@ class Partition:
         Find the root of the destination vertex tree
         If they are different, set root of the destination vertex tree to the root of the source vertex tree
         """
-        raise NotImplementedError
+        sourceVertex = self._find_root(e.src) 
+        dstVertex = self._find_root(e.dst)
+        if sourceVertex != dstVertex and sourceVertex: self._forest[e.dst] = sourceVertex
+        else: self._forest[int(dstVertex)] = sourceVertex
 
     def _find_root(self, node: int) -> int:
         """
@@ -33,7 +36,11 @@ class Partition:
 
         The root of a tree is a node that has its value matching the index in the forest
         """
-        raise NotImplementedError
+        if self._forest[node] == node: 
+            return node
+        else:
+            while node != self.forest[node]: node = self.forest[node]
+            return node
 
     def __str__(self) -> str:
         """Stringify the forest"""
@@ -57,8 +64,19 @@ def read_xml(filename: str) -> tuple:
     xml_edges = xml_graph.getElementsByTagName("Edges")[0].getElementsByTagName("Edge")
 
     # TODO: Add all vertices from the XML file to the dictionary of vertices
+    for aVertice in xml_vertices:
+        i  = int(aVertice.getAttribute("id"))
+        key = aVertice.getAttribute("label")
+        x = float(aVertice.getAttribute("x")) 
+        y = float(aVertice.getAttribute("y"))
+        vertices[i] = Vertex(i, x, y, key)
 
     # TODO: Add all edges from the XML file to the list of edges
+    for edge in xml_edges:
+        src = int(edge.getAttribute("source"))
+        weight = float(edge.getAttribute("weight"))
+        dst = int(edge.getAttribute("destination"))
+        edges.append(Edge(src, dst, weight))
 
     return vertices, edges
 
