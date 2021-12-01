@@ -37,7 +37,8 @@ class Stack:
         :param item: a new item to push onto the stack
         """
         # TODO: Implement this method
-        ...
+        self.items.append(item)
+        self.siftdown( 0, len(self.items)-1)
 
 
     def pop(self) -> Any:
