@@ -29,6 +29,39 @@ class Stack:
         """Initialize a stack using heapq"""
         # NOTE: Do not modify this method
         self.items = []
+    
+    def siftdown(heap, startpos, pos):
+        newitem = heap[pos]
+        # Follow the path to the root, moving parents down until finding a place
+        # newitem fits.
+        while pos > startpos:
+            parentpos = (pos - 1) >> 1
+            parent = heap[parentpos]
+            if newitem < parent:
+                heap[pos] = parent
+                pos = parentpos
+                continue
+            break
+        heap[pos] = newitem
+
+    def siftup(heap, pos):
+        endpos = len(heap)
+        startpos = pos
+        newitem = heap[pos]
+       
+        childpos = 2*pos + 1    
+        while childpos < endpos:
+            
+            rightpos = childpos + 1
+            if rightpos < endpos and not heap[childpos] < heap[rightpos]:
+                childpos = rightpos
+           
+            heap[pos] = heap[childpos]
+            pos = childpos
+            childpos = 2*pos + 1
+        
+        heap[pos] = newitem
+        heap.siftdown( startpos, pos)
 
     def push(self, item: Any) -> None:
         """
@@ -49,7 +82,16 @@ class Stack:
         :raise StackError is the stack is empty
         """
         # TODO: Implement this method
-        ...
+        self.items.pop()
+        """Pop the smallest item off the heap, maintaining the heap invariant."""
+        heap = self.items
+        lastelt = heap.pop()    # raises appropriate IndexError if heap is empty
+        if heap:
+            returnitem = heap[0]
+            heap[0] = lastelt
+            self.siftup( 0)
+            return returnitem
+        return lastelt
 
 
     def peek(self) -> Any:
@@ -60,7 +102,7 @@ class Stack:
         :raise StackError is the stack is empty
         """
         # TODO: Implement this method
-        ...
+        return self.items[0]
 
 
     def __bool__(self) -> bool:
@@ -70,7 +112,10 @@ class Stack:
         :return: False if the stack is empty, True otherwise
         """
         # TODO: Implement this method
-        ...
+        value = True
+        if len(self.items)==0:
+            value = False
+        return value
 
 
     def __len__(self) -> int:
@@ -80,5 +125,5 @@ class Stack:
         :return: number of items in the stack (0 if the stack is empty)
         """
         # TODO: Implement this method
-        ...
+        return len(self.items)==0
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 """Implementation of the Partition data structure"""
-# Firdavs Atabaev
-
 from xml.dom import minidom
 from collections import namedtuple
 
@@ -28,9 +26,9 @@ class Partition:
         """
         sourceVertex = self._find_root(e.src) 
         dstVertex = self._find_root(e.dst)
-        if sourceVertex != dstVertex and sourceVertex: self._forest[e.dst] = sourceVertex
-        else: self._forest[int(dstVertex)] = sourceVertex
-
+        if sourceVertex != dstVertex: 
+            self._forest[int(dstVertex)] = sourceVertex
+        
     def _find_root(self, node: int) -> int:
         """
         Find root of a node
@@ -40,7 +38,8 @@ class Partition:
         if self._forest[node] == node: 
             return node
         else:
-            while node != self.forest[node]: node = self.forest[node]
+            while node != self.forest[node]: 
+                node = self.forest[node]
             return node
 
     def __str__(self) -> str:
@@ -94,5 +93,5 @@ def main():
     print(partition.forest)
 
 
-if __name__ == "__main__":
+if __name__ == "_main_":
     main()
