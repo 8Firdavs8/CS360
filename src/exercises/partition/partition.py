@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+#Firdavs Atabaev
+#CS360
+#Roman Yasinovskyy
+
 """Implementation of the Partition data structure"""
 from xml.dom import minidom
 from collections import namedtuple
