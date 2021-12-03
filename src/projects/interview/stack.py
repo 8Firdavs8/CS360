@@ -6,7 +6,9 @@ stack implementation
 @authors: Roman Yasinovskyy
 @version: 2021.11
 """
-
+#Firdavs Atabaev
+#CS360
+#Roman Yasinovskyy
 import heapq
 from typing import Any
 
