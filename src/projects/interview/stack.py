@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 stack implementation
@@ -6,6 +5,7 @@ stack implementation
 @authors: Roman Yasinovskyy
 @version: 2021.11
 """
+
 import heapq
 from typing import Any
 
@@ -29,17 +29,17 @@ class Stack:
         """Initialize a stack using heapq"""
         # NOTE: Do not modify this method
         self.items = []
-   
-   
+
     def push(self, item: Any) -> None:
-        count = 0
         """
         Add a new item to stack
 
         :param item: a new item to push onto the stack
         """
-        heapq.heappush(self.items,(count,item))
-        count = count + 1
+        # TODO: Implement this method
+        # self.items.insert(0,item)
+        heapq.heappush(self.items, item)
+
 
     def pop(self) -> Any:
         """
@@ -48,7 +48,13 @@ class Stack:
         :return: the top element of the stack
         :raise StackError is the stack is empty
         """
-        return heapq.heappop(self.items)
+        # TODO: Implement this method
+        if len(self.items)>0:
+            heapq._heapify_max(self.items)
+            return heapq.heappop(self.items)
+        else:
+            raise StackError("Cannot pop from an empty stack")
+
 
     def peek(self) -> Any:
         """
@@ -57,10 +63,16 @@ class Stack:
         :return: the top element of the stack
         :raise StackError is the stack is empty
         """
-        
-        
-        element = self.items[0]
-        return element
+        # TODO: Implement this method
+        if len(self.items)>0:
+            # return self.items[0]
+            # element = heapq.heappop(self.items)
+            # heapq.heappush(element)
+            # return element
+            # or simply (python doc accessing by help(heapq))
+            return self.items[-1]
+        else:
+            raise StackError("The stack is empty")
 
 
     def __bool__(self) -> bool:
@@ -69,10 +81,12 @@ class Stack:
 
         :return: False if the stack is empty, True otherwise
         """
-        value = True
-        if len(self.items)==0:
-            value = False
-        return value
+        # TODO: Implement this method
+        if len(self.items) != 0:
+            return True
+        else:
+            return False
+
 
     def __len__(self) -> int:
         """
@@ -80,4 +94,5 @@ class Stack:
 
         :return: number of items in the stack (0 if the stack is empty)
         """
-        return len(self.items)==1
+        # TODO: Implement this method
+        return len(self.items) 
