@@ -37,7 +37,7 @@ class Stack:
         :param item: a new item to push onto the stack
         """
         # TODO: Implement this method
-        # self.items.insert(0,item)
+        
         heapq.heappush(self.items, item)
 
 
@@ -67,7 +67,7 @@ class Stack:
         if len(self.items)>0:
             return self.items[-1]
         else:
-            raise StackError("Nothing to see here, the stack is empty")
+            raise StackError(" the stack is empty")
 
 
     def __bool__(self) -> bool:
