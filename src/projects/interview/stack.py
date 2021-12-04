@@ -67,6 +67,7 @@ class Stack:
         """
         # TODO: Implement this method
         a = len(self.items) * -1
+        
         if len(self.items)>0:
             return self.items[a][1]
         else:
