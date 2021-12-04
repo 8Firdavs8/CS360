@@ -65,14 +65,9 @@ class Stack:
         """
         # TODO: Implement this method
         if len(self.items)>0:
-            # return self.items[0]
-            # element = heapq.heappop(self.items)
-            # heapq.heappush(element)
-            # return element
-            # or simply (python doc accessing by help(heapq))
             return self.items[-1]
         else:
-            raise StackError("The stack is empty")
+            raise StackError("Nothing to see here, the stack is empty")
 
 
     def __bool__(self) -> bool:
@@ -95,4 +90,4 @@ class Stack:
         :return: number of items in the stack (0 if the stack is empty)
         """
         # TODO: Implement this method
-        return len(self.items) 
+        return len(self.items)
