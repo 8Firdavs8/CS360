@@ -5,7 +5,7 @@ stack implementation
 @authors: Roman Yasinovskyy
 @version: 2021.11
 """
-
+#Name - Sharayu Phanse 
 import heapq
 from typing import Any
 
@@ -38,7 +38,9 @@ class Stack:
         """
         # TODO: Implement this method
         
-        heapq.heappush(self.items, item)
+        x = (len(self.items) * -1, item)
+
+        heapq.heappush(self.items, x)
 
 
     def pop(self) -> Any:
@@ -49,9 +51,9 @@ class Stack:
         :raise StackError is the stack is empty
         """
         # TODO: Implement this method
+        
         if len(self.items)>0:
-            heapq._heapify_max(self.items)
-            return heapq.heappop(self.items)
+            return heapq.heappop(self.items)[1]
         else:
             raise StackError("Cannot pop from an empty stack")
 
@@ -64,10 +66,11 @@ class Stack:
         :raise StackError is the stack is empty
         """
         # TODO: Implement this method
+        a = len(self.items) * -1
         if len(self.items)>0:
-            return self.items[-1]
+            return self.items[a][1]
         else:
-            raise StackError(" the stack is empty")
+            raise StackError("Nothing to see here, the stack is empty")
 
 
     def __bool__(self) -> bool:
